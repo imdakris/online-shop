@@ -36,4 +36,11 @@ class Products(models.Model):
         return f'{self.name} Количество - {self.quantity}'
     
     def display_id(self):
+        '''Adds 00000 to the product id'''
         return f'{self.id:05}' 
+    
+    def sell_price(self):
+        '''Calculates a discount on a product'''
+        if self.discount:
+            return round(self.price - self.price*self.discount/100, 2)
+        return self.price
