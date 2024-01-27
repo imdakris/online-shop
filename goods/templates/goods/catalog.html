@@ -10,10 +10,10 @@
                 Фильтры
             </button>
 
-            <form action="" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+            <form action="{% url "catalog:index" slug_url %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
                 <div class="form-check text-white mx-3">
                     <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on">
-                    <input type="hidden" name="q" value="request.GET.q">
+                    {% comment %} <input type="hidden" name="q" value="request.GET.q"> {% endcomment %}
                     <label class="form-check-label" for="flexCheckDefault">
                         Товары по акции
                     </label>
@@ -39,6 +39,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary mx-3 mt-3">Применить</button>
             </form>
+            
         </div>
 
         {% for product in goods %}       
@@ -81,13 +82,11 @@
         <div class="custom-shadow d-flex">
 
             <li class="page-item {% if not goods.has_previous %}disabled{% endif %}">
-              <a class="page-link" href="{% if goods.has_previous %}?page={{goods.previous_page_number}}{% else %}
-              #
-              {% endif %}">Назад</a>
+                <a class="page-link" href="{% if goods.has_previous %}?page={{goods.previous_page_number}}{% else %}#{% endif %}">Назад</a>
             </li>
 
             {% for page in goods.paginator.page_range %}
-            {% if page >= goods.number|add:-2 and page <= goods.number|add:2  %}
+            {% if page >= goods.number|add:-2 and page <= goods.number|add:2 %}
             <li class="page-item {% if goods.number == page %} active {% endif %}">
                 <a class="page-link" href="?page={{page}}">{{ page }}</a>
             </li>
@@ -95,9 +94,7 @@
             {% endfor %}
 
             <li class="page-item {% if not goods.has_next %}disabled{% endif %}">
-                <a class="page-link" href="{% if goods.has_next %}?page={{goods.next_page_number}}{% else %}
-                #
-                {% endif %}">Следующая</a>
+                <a class="page-link" href="{% if goods.has_next %}?page={{goods.next_page_number}}{% else %}#{% endif %}">Следующая</a>
               </li>
             </li>
         </div>
