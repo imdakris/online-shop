@@ -18,6 +18,8 @@ def login(request):
             if user:
                 auth.login(request, user)
                 messages.success(request, f"{username}, Вы вошли в аккаунт")
+                if request.POST.get("next", None):
+                    return HttpResponseRedirect(request.POST.get("next"))
                 return HttpResponseRedirect(reverse("main:index"))
     else:
         form = UserLoginForm()
@@ -44,7 +46,7 @@ def registration(request):
 @login_required
 def profile(request):
     if request.method == "POST":
-        form = ProfileForm(
+        form = ProfileForm( # FIXME
             data=request.POST, Instance=request.user, files=request.FILES
         )
         if form.is_valid():
