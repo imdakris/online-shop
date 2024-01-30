@@ -18,9 +18,15 @@ def login(request):
             if user:
                 auth.login(request, user)
                 messages.success(request, f"{username}, Вы вошли в аккаунт")
-                if request.POST.get("next", None):
+
+                redirect_page = request.POST.get('next', None)
+                if redirect_page and redirect_page != reverse('user:logout'):
                     return HttpResponseRedirect(request.POST.get("next"))
+                
                 return HttpResponseRedirect(reverse("main:index"))
+            
+            if not user:
+                messages.error(request, "Неверное имя пользователя или пароль. Попробуйте снова.")
     else:
         form = UserLoginForm()
 
@@ -35,7 +41,7 @@ def registration(request):
             form.save()
             user = form.instance
             auth.login(request, user)
-            messages.success(request, f"{user.username}, Вы успешно зарегистрированы")
+            messages.success(request, f"{user.username}, Вы успешно зарегистрированы. Добро пожаловать!")
             return HttpResponseRedirect(reverse("main:index"))
     else:
         form = UserRegistrationForm()
