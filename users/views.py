@@ -46,9 +46,7 @@ def registration(request):
 @login_required
 def profile(request):
     if request.method == "POST":
-        form = ProfileForm( # FIXME
-            data=request.POST, Instance=request.user, files=request.FILES
-        )
+        form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Профайл успешно обновлён")
@@ -59,8 +57,11 @@ def profile(request):
     context = {"title": "Home - Кабинет", "form": form}
 
     return render(request, "users/profile.html", context)
+
+
 def users_cart(request):
     return render(request, "users/users_cart.html")
+
 
 @login_required
 def logout(request):

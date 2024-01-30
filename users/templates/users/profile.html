@@ -9,10 +9,12 @@
             <div class="col-md-5">
                 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
                     <h3 class="text-center mb-4">Профиль пользователя</h3>
+
                     <form action="{% url "users:profile" %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-12 mb-3 text-center">
+
                                 {% if user.image %}
                                     <img src="{{ user.image.url }}"
                                             alt="Аватар пользователя" class="img-fluid rounded-circle"
@@ -22,11 +24,12 @@
                                         alt="Аватар пользователя" class="img-fluid rounded-circle"
                                         style="max-width: 150px;">
                                 {% endif %}
+
                                 <input type="file" class="form-control mt-3" id="id_image"
                                     name = 'image'
                                     accept="image/*">
                                     {% if form.image.errors %}
-                                        <div class="alert alert-danger alert=dismissible fade show">{{form.image.errors}}</div>
+                                        <div class="alert alert-danger alert-dismissible fade show">{{form.image.errors}}</div>
                                     {% endif %}
 
                             </div>
@@ -37,8 +40,8 @@
                                     placeholder="Введите ваше имя" 
                                     value="{{ form.first_name.value }}" 
                                     required>
-                                    {% if form.firstname.errors %}
-                                    <div class="alert alert-danger alert=dismissible fade show">{{form.firstname.errors}}</div>
+                                    {% if form.first_name.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
                                     {% endif %}
                             </div>
                             <div class="col-md-12 mb-3">
@@ -46,10 +49,10 @@
                                 <input type="text" class="form-control" id="id_lastName"
                                     name="lastName"
                                     placeholder="Введите вашу фамилию" 
-                                    value="{{ form.lastName.value }}" 
+                                    value="{{ form.last_name.value }}" 
                                     required>
-                                    {% if form.lastName.errors %}
-                                    <div class="alert alert-danger alert=dismissible fade show">{{form.lastName.errors}}</div>
+                                    {% if form.last_name.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
                                     {% endif %}
                             </div>
                             <div class="col-md-12 mb-3">
@@ -60,7 +63,7 @@
                                     value="{{ form.username.value }}" 
                                     required>
                                     {% if form.username.errors %}
-                                    <div class="alert alert-danger alert=dismissible fade show">{{form.username.errors}}</div>
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.username.errors}}</div>
                                     {% endif %}
                             </div>
                             <div class="col-md-12 mb-3">
@@ -71,7 +74,7 @@
                                     value="{{ form.email.value }}"
                                     required>
                                     {% if form.email.errors %}
-                                    <div class="alert alert-danger alert=dismissible fade show">{{form.email.errors}}</div>
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.email.errors}}</div>
                                     {% endif %}
                             </div>
                         </div>
