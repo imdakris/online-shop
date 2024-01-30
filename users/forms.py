@@ -53,4 +53,4 @@ class ProfileForm(UserChangeForm):
     first_name = forms.CharField(label="Имя")
     last_name = forms.CharField(label="Фамилия")
     username = forms.CharField(label="Имя пользователя")
-    email = forms.EmailField(label="Email")  #email = forms.CharField()
+    email = forms.EmailField(label="Email")
