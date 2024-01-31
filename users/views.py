@@ -10,6 +10,20 @@ from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
 
 
 def login(request):
+    """
+    Handle user login.
+
+    If the request method is POST, validate the login form.
+    If the form is valid, authenticate the user, log them in, and update the user's cart.
+    Redirect to the next page if provided, otherwise redirect to the index page.
+
+    Parameters:
+        - request: HttpRequest object.
+
+    Returns:
+        - HttpResponseRedirect: Redirect to the specified page after successful login.
+        - render: Render the login page with the login form.
+    """
     if request.method == "POST":
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
@@ -42,6 +56,19 @@ def login(request):
 
 
 def registration(request):
+    """
+    Handle user registration.
+
+    If the request method is POST, validate the registration form.
+    If the form is valid, save the user, log them in, update the user's cart, and redirect to the index page.
+
+    Parameters:
+        - request: HttpRequest object.
+
+    Returns:
+        - HttpResponseRedirect: Redirect to the index page after successful registration.
+        - render: Render the registration page with the registration form.
+    """
     if request.method == "POST":
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
@@ -53,7 +80,7 @@ def registration(request):
             auth.login(request, user)
             if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
-                    
+
             messages.success(request, f"{user.username}, Вы успешно зарегистрированы. Добро пожаловать!")
             return HttpResponseRedirect(reverse("main:index"))
     else:
@@ -64,6 +91,19 @@ def registration(request):
 
 @login_required
 def profile(request):
+    """
+    Display and handle updates to the user profile.
+
+    If the request method is POST, validate the profile form and update the user profile.
+    If the form is valid, display a success message and redirect to the profile page.
+
+    Parameters:
+        - request: HttpRequest object.
+
+    Returns:
+        - HttpResponseRedirect: Redirect to the profile page after successful profile update.
+        - render: Render the profile page with the profile form.
+    """
     if request.method == "POST":
         form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
@@ -79,11 +119,29 @@ def profile(request):
 
 
 def users_cart(request):
+    """
+    Display the user's cart page.
+
+    Parameters:
+        - request: HttpRequest object.
+
+    Returns:
+        - render: Render the user's cart page.
+    """
     return render(request, "users/users_cart.html")
 
 
 @login_required
 def logout(request):
+    """
+    Log the user out, display a logout message, and redirect to the index page.
+
+    Parameters:
+        - request: HttpRequest object.
+
+    Returns:
+        - redirect: Redirect to the index page after successful logout.
+    """
     messages.success(request, f"{request.user.username} Вы вышли из аккаунта")
     auth.logout(request)
     return redirect(reverse("main:index"))

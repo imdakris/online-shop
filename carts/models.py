@@ -16,6 +16,26 @@ class CartQueryset(models.QuerySet):
 
 
 class Cart(models.Model):
+    """
+    Model representing a shopping cart.
+
+    Attributes:
+        user (User): The user associated with the cart. Can be null for anonymous users.
+        product (Products): The product added to the cart.
+        quantity (PositiveSmallIntegerField): The quantity of the product in the cart.
+        session_key (CharField): The session key for anonymous users.
+        created_timestamp (DateTimeField): The date and time when the product was added to the cart.
+
+    Meta:
+        db_table (str): The name of the database table.
+        verbose_name (str): A human-readable singular name for the model.
+        verbose_name_plural (str): A human-readable plural name for the model.
+
+    Methods:
+        products_price(self): Returns the total price of the products in the cart.
+        __str__(self): Returns a human-readable string representation of the cart.
+
+    """
     user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
@@ -40,7 +60,21 @@ class Cart(models.Model):
     objects = CartQueryset().as_manager()
 
     def products_price(self):
+        """
+        Calculate and return the total price of the products in the cart.
+
+        Returns:
+            float: The total price of the products in the cart.
+        """
         return round(self.product.sell_price() * self.quantity, 2)
 
     def __str__(self):
-        return f"Корзина{self.user.username} | Товар {self.product.name} | Количество {self.quantity}"
+        """
+        Return a string representation of the cart.
+
+        Returns:
+            str: A human-readable string representation of the cart.
+        """
+        if self.user:
+            return f"Корзина {self.user.username} | Товар {self.product.name} | Количество {self.quantity}"
+        return f"Анонимная корзина{self.user.username} | Товар {self.product.name} | Количество {self.quantity}"
