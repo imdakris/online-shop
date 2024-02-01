@@ -1,4 +1,3 @@
-from turtle import update
 from django.contrib import messages, sessions
 from django.http import JsonResponse
 from django.shortcuts import redirect
