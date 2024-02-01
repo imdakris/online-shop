@@ -2,7 +2,6 @@
 {% load static %}
 {% load carts_tags %}
 
-
 {% block content %}
 <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
     <div class="container">
@@ -10,6 +9,7 @@
         <div class="container" id="cart-items-container">
             <!-- Разметка корзины -->
             {% user_carts request as carts %}
+
             {% include "carts/includes/included_cart.html" %}
             <!-- Закончилась разметка корзины -->
         </div>
@@ -25,7 +25,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="id_first_name" class="form-label">Имя*:</label>
                             <input type="text" class="form-control" id="id_first_name"
-                                value = "{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
+                                value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
                                 name="first_name" required>
                             {% if form.first_name.errors %}
                                 <div class="alert alert-danger alert-dismissible fade show">{{form.first_name.errors}}</div>
@@ -33,9 +33,8 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="id_last_name" class="form-label">Фамилия*:</label>
-                            <input type="text" class="form-control" id="id_last_name"
-                            value = "{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}" 
-                            name="last_name" 
+                            <input type="text" class="form-control" id="id_last_name" name="last_name"
+                            value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
                             required>
                             {% if form.last_name.errors %}
                                 <div class="alert alert-danger alert-dismissible fade show">{{form.last_name.errors}}</div>
@@ -43,11 +42,10 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="id_phone_number" class="form-label">Номер телефона*:</label>
-                            <input type="text" class="form-control" id="id_phone_number"
-                            value = "{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}" 
-                            name="phone_number"
-                            placeholder="В формате: XXX-XXX-XX-XX"
-                            required>
+                            <input type="text" class="form-control" id="id_phone_number" name="phone_number"
+                                value="{% if form.phone_number.value %}{{ form.phone_number.value }}{% endif %}"
+                                placeholder="В формате: XXX-XXX-XX-XX"
+                                required>
                             {% if form.phone_number.errors %}
                                 <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
                             {% endif %}
@@ -70,8 +68,8 @@
                             <label for="id_delivery_address" class="form-label">Адрес
                                 доставки*:</label>
                             <textarea class="form-control" id="id_delivery_address"
-                            value = "{% if form.delivery_address.value %}{{ form.delivery_address.value }}{% endif %}"
-                            name="delivery_address" rows="2"></textarea>
+                                value="{% if form.delivery_address.value %}{{ form.delivery_address.value }}{% endif %}"
+                                name="delivery_address" rows="2"></textarea>
                             {% if form.delivery_address.errors %}
                                 <div class="alert alert-danger alert-dismissible fade show">{{form.delivery_address.errors}}</div>
                             {% endif %}
@@ -88,7 +86,10 @@
                                 <input class="form-check-input" type="radio" name="payment_on_get"
                                     id="id_payment_on_get" value="1">
                                 <label class="form-check-label" for="id_payment_on_get">Наличными/картой
-                                    при получении</label>
+                                    при плучении</label>
+                                {% if form.payment_on_get.errors %}
+                                    <div class="alert alert-danger alert-dismissible fade show">{{form.payment_on_get.errors}}</div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -98,4 +99,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock  %}
